@@ -10,7 +10,23 @@ that case you need to tell the image to use the correct permissions for the
 volume. Both changes are applied in the `openanalytics/shinyproxy-juypter-datascience`
 image. This image is built from the [Dockerfile](Dockerfile) in this repo.
 
-## Usage
+## Building the Docker image
+
+To pull the image made in this repository from Docker Hub, use
+
+```bash
+sudo docker pull openanalytics/shinyproxy-juypter-datascience
+```
+
+The relevant Docker Hub repository can be found at [https://hub.docker.com/r/openanalytics/shinyproxy-juypter-datascience](https://hub.docker.com/r/openanalytics/openanalytics/shinyproxy-juypter-datascience])
+
+To build the image from the Dockerfile, navigate into the root directory of this repository and run
+
+```bash
+sudo docker build -t openanalytics/shinyproxy-juypter-datascience .
+```
+
+## ShinyProxy Configuration
 
 **Note:** this configuration makes use of a new configuration option, which is
 not yet available in a stable release of ShinyProxy. Therefore you have to use
@@ -24,19 +40,21 @@ Create a ShinyProxy configuration file (see [application.yml](application.yml) f
 - id: jupyter-notebook
   display-name: Jupyter Notebook
   description: Jupyter Notebook is a web-based interactive computational environment for creating Jupyter notebook documents.
-  container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxySpec.containerSpecs[0].env.get('SHINYPROXY_PUBLIC_PATH')}"]
+  container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
   container-image: openanalytics/shinyproxy-juypter-datascience
   container-volumes: [ "/tmp/jupyter/#{proxy.userId}/work:/home/jovyan/work"]
   port: 8888
-  target-path: "#{proxySpec.containerSpecs[0].env.get('SHINYPROXY_PUBLIC_PATH')}"
+  websocket-reconnection-mode: None
+  target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
 - id: jupyter-notebook-lab
   display-name: Jupyter Notebook Lab
   description: Jupyter Notebook running in lab mode.
-  container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxySpec.containerSpecs[0].env.get('SHINYPROXY_PUBLIC_PATH')}"]
+  container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
   container-image: openanalytics/shinyproxy-juypter-datascience
   container-volumes: [ "/tmp/jupyter/#{proxy.userId}/work:/home/jovyan/work"]
   port: 8888
-  target-path: "#{proxySpec.containerSpecs[0].env.get('SHINYPROXY_PUBLIC_PATH')}"
+  websocket-reconnection-mode: None
+  target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
   container-env:
     JUPYTER_ENABLE_LAB: yes
 ```
