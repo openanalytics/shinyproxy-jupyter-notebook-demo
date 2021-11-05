@@ -28,11 +28,7 @@ sudo docker build -t openanalytics/shinyproxy-juypter-datascience .
 
 ## ShinyProxy Configuration
 
-**Note:** this configuration makes use of a new configuration option, which is
-not yet available in a stable release of ShinyProxy. Therefore you have to use
-the snapshot release
-`openanalytics/shinyproxy-snapshot:2.5.1-SNAPSHOT-20210521.074523` or [the
-respective jar file](https://nexus.openanalytics.eu/repository/snapshots/eu/openanalytics/shinyproxy/2.5.1-SNAPSHOT/shinyproxy-2.5.1-20210521.074523-12.jar).
+**Note:** ShinyProxy 2.6.0 or later is required for running Jupyter notebooks.
 
 Create a ShinyProxy configuration file (see [application.yml](application.yml) for a complete file)
 
