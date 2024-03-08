@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook:r-4.0.3
+FROM jupyter/datascience-notebook:r-4.3.1
 
 COPY custom.js /home/jovyan/.jupyter/custom/custom.js
 

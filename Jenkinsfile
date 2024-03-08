@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-        IMAGE = "shinyproxy-juypter-datascience"
+        IMAGE = "shinyproxy-jupyter-datascience"
         NS = "openanalytics"
         REG = "196229073436.dkr.ecr.eu-west-1.amazonaws.com"
         VERSION = 'r-4.0.3'
@@ -22,7 +22,7 @@ pipeline {
 
     stages {
 
-        stage('Build openanalytics/shinyproxy-juypter-datascience Docker'){
+        stage('Build openanalytics/shinyproxy-jupyter-datascience Docker'){
             steps {
                 container('dind'){
                     withOARegistry {
