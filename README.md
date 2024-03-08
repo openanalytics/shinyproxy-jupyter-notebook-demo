@@ -53,4 +53,4 @@ out), your files are available again.
 
 ![Jupyter Notebook Lab](.github/screenshots/jupyter_notebook_lab.png)
 
-**(c) Copyright Open Analytics NV, 2021-024.**
+**(c) Copyright Open Analytics NV, 2021-2024.**
