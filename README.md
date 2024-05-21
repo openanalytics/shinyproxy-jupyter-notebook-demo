@@ -33,15 +33,17 @@ sudo docker build -t openanalytics/shinyproxy-jupyter-datascience .
 Create a ShinyProxy configuration file (see [application.yml](application.yml) for a complete file)
 
 ```yaml
-- id: jupyter-notebook-lab
-  display-name: Jupyter Notebook Lab
-  description: Jupyter Notebook running in lab mode.
-  container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
-  container-image: openanalytics/shinyproxy-jupyter-datascience
-  container-volumes: [ "/tmp/jupyter/#{proxy.userId}/work:/home/jovyan/work"]
-  port: 8888
-  websocket-reconnection-mode: None
-  target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
+proxy:
+  specs:
+    - id: jupyter-notebook-lab
+      display-name: Jupyter Notebook Lab
+      description: Jupyter Notebook running in lab mode.
+      container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
+      container-image: openanalytics/shinyproxy-jupyter-datascience
+      container-volumes: [ "/tmp/jupyter/#{proxy.userId}/work:/home/jovyan/work"]
+      port: 8888
+      websocket-reconnection-mode: None
+      target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
 ```
 
 Note: this will mount `/tmp/jupyter/#{proxy.userId}` as the workspace for
